@@ -1,0 +1,23 @@
+---
+- hosts: web 
+  tasks: 
+  - name: Install apache2 with php modules
+    apt: 
+      name: "{{ item }}"
+    with_items:
+    - apache2
+    - php7.0
+    - libapache2-mod-php7.0
+    - php7.0-mcrypt
+    - php7.0-mysql
+    - php7.0-cli
+    - wget
+    become: yes
+
+  - name: Enable mods
+    apache2_module: name=rewrite state=present
+    become: yes
+
+  - name: Restart apache2
+    service: name=apache2 state=restarted
+    become: yes

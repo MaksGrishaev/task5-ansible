@@ -1,0 +1,11 @@
+[db]
+vm1_db	ansible_ssh_user=root
+
+[web]
+vm2_web	ansible_ssh_user=root
+
+[db_aws]
+vm1_aws_db 
+
+[web_aws]
+vm2_aws_web ansible_ssh_host=18.188.69.210 ansible_ssh_user=ubuntu

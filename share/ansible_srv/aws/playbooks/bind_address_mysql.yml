@@ -1,0 +1,14 @@
+---
+- hosts: vm1_db
+  tasks:
+
+  - name: Change bind-address
+    lineinfile: dest=/etc/mysql/my.cnf
+      regexp='^bind-address'
+      insertbefore=BOF
+      line='bind-address = 0.0.0.0'
+
+  - name: Restart mysql 
+    service:
+      name: mysql
+      state: restarted

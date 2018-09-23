@@ -1,0 +1,39 @@
+---
+- hosts: vm1_db
+  vars:
+    mysql_root_password: Pa$$w0rd
+  tasks:
+
+  - name: Install mysql-server
+    apt: name={{ item }} update_cache=yes cache_valid_time=3600 state=present
+    sudo: yes
+    with_items:
+    - mysql-server
+    - python-mysqldb
+
+  - name: Change bind-address
+    lineinfile: dest=/etc/mysql/my.cnf
+      regexp='^bind-address'
+      insertbefore=BOF
+      line='bind-address = 0.0.0.0'
+
+  - name: Start mysqld service
+    sudo: yes
+    service: 
+      name: mysql
+      state: started
+      enabled: true
+
+  - name: Update root
+    sudo: yes
+    mysql_user:
+      name: root
+      host: "{{ item }}"
+      password: "{{ mysql_root_password }}"
+      state: present
+    with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+ 

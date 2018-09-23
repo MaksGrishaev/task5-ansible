@@ -1,0 +1,6 @@
+[db]
+vm1_db	ansible_ssh_user=root
+
+[web]
+vm2_aws_web ansible_host=18.188.69.210 ansible_ssh_user=ubuntu ansible_ssh_private_key=/mnt/mg1.pem
+

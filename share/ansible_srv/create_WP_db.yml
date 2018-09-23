@@ -1,0 +1,21 @@
+---
+- hosts: vm1_db
+  vars:
+    mysql_root_password: Pa$$w0rd
+    wp_mysql_db: wordpress
+    wp_mysql_user: wordpress
+    wp_mysql_password: w0rDpre$$
+
+  tasks:
+
+  - name: Create DB for WP
+    mysql_db:
+      name: wordpress
+      state: present
+
+  - name: Create User for WP
+    mysql_user:
+      name: "{{ mysql_wp_user }}"
+      password: "{{ mysql_wp_password }}"
+      priv: "wordpress.*:ALL,GRANT"
+      state: present
